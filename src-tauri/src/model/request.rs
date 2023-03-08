@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 
-#[derive(Serialize,Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct  Request {
     /** 请求地址 */
     pub request_addr: String,

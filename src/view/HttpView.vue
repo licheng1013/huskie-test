@@ -13,7 +13,7 @@
         </div>
       </el-form-item>
 
-      <el-form-item label="请求次数设置">
+      <el-form-item label="请求线程数">
         <div style="width: 150px">
           <el-input v-model="form.thread"/>
         </div>
