@@ -20,7 +20,7 @@ impl ThreadUtil {
 
 #[cfg(test)]
 mod test {
-    use std::{thread, time::{Duration, SystemTime}, sync::mpsc};
+    use std::{time::{SystemTime}, sync::mpsc};
 
     use super::ThreadUtil;
 

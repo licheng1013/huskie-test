@@ -23,7 +23,7 @@ impl HttpUtil {
         let (tx, rx) = mpsc::channel();
         let f = move || {
             for _i in 0..count {
-                let res = match reqwest::blocking::get("https://www.shileke.cn/api/banner/list") {
+                let _res = match reqwest::blocking::get("https://www.shileke.cn/api/banner/list") {
                     Ok(ok) => {
                         println!("数据: {:?}", ok.text().unwrap())
                     },
