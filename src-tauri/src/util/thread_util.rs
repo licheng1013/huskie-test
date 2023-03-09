@@ -4,13 +4,13 @@ pub struct ThreadUtil {}
 
 impl ThreadUtil {
     // impl是编译的时候内存就固定了的，dyn是不固定的
-    fn run(f: impl Fn() + Send + 'static) {
+    pub fn run(f: impl Fn() + Send + 'static) {
         //f(); // 这行移除注释会报错,因为rust不允许调用后,再次移动闭包
         let _handle = thread::spawn(move || {
             f();
         });
     }
-    pub fn many_run(thread_count: i32,f: impl Fn() + Send  + 'static + Clone) {
+    pub  fn many_run(thread_count: i32,f: impl Fn() + Send  + 'static + Clone) {
         for _i in 0..thread_count {
             ThreadUtil::run(f.clone());
         }

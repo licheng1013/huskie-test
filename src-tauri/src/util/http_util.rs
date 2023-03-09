@@ -8,8 +8,8 @@ pub struct HttpUtil {}
 
 impl HttpUtil {
     #[tokio::main]
-    async fn get() -> Result<(), Box<dyn std::error::Error>> {
-        let resp = reqwest::get("https://www.shileke.cn/api/banner/list")
+    async fn get(request: Request) -> Result<(), Box<dyn std::error::Error>> {
+        let resp = reqwest::get(request.request_addr)
             .await?
             .text()
             .await?;
@@ -17,13 +17,12 @@ impl HttpUtil {
         Ok(())
     }
 
-    fn get_test(request: Request) -> Result<(), Box<dyn std::error::Error>> {
+   pub fn get_test(request: Request) -> Result<(u128), Box<dyn std::error::Error>> {
         let thread_count = request.thread;
-        let count = request.thread * request.total; // 100w
         let (tx, rx) = mpsc::channel();
         let f = move || {
-            for _i in 0..count {
-                let _res = match reqwest::blocking::get("https://www.shileke.cn/api/banner/list") {
+            for _i in 0..request.total {
+                let _res = match reqwest::blocking::get(&request.request_addr) {
                     Ok(ok) => {
                         println!("数据: {:?}", ok.text().unwrap())
                     },
@@ -45,16 +44,24 @@ impl HttpUtil {
             "执行总耗时: {:?}",
             end_time.duration_since(start_time).unwrap().as_millis()
         );
-        Ok(())
+        Ok(end_time.duration_since(start_time).unwrap().as_millis())
     }
 }
 
 #[cfg(test)]
 mod test {
+    use crate::model::request::Request;
+
     use super::HttpUtil;
 
     #[test]
     fn test() {
-        HttpUtil::get().unwrap()
+        let v = Request{
+            request_addr: "http://localhost:8088/index".into(),
+            method: "GET".into(),
+            thread: 1,
+            total: 10000, //每个线程请求数量
+        };
+        HttpUtil::get_test(v);
     }
 }
