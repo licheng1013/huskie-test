@@ -26,19 +26,19 @@ mod test {
 
     #[test]
     fn test() {
-        let thread_count = 30;
-        let count = 10000;
+        let thread_count = 100;
+        let count = 1000000; // 100w
         let (tx, rx) = mpsc::channel();
         let f = move|| {
             for _i in 0..count {
                 //println!("HelloWorld: {:?}", i);
-                tx.send(1).unwrap();
             }
+            tx.send(1).unwrap();
         };
         ThreadUtil::many_run(thread_count,f);
         let start_time = SystemTime::now();
         let mut number  = 0;
-        for _i in 0..count*thread_count{
+        for _i in 0..thread_count{
             let received = rx.recv().unwrap();
             number+=received;
             println!("数据: {:?}",number)
