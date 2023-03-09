@@ -10,3 +10,7 @@
 
 ## less(css预处理)
 - pnpm install less less-loader -D
+
+
+## Rust
+- cargo fix 修复功能
