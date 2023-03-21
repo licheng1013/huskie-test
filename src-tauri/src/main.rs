@@ -15,9 +15,10 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-async fn request_test(request: Request) -> u128 {
+async fn request_test(request: Request) -> Request {
     println!("请求地址{:?}",request);
     let v = HttpUtil::get_test(request).expect("错误");
+    println!("{:?}",v);
     return  v;
 }
 

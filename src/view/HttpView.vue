@@ -59,7 +59,8 @@ const onSubmit = () => {
   form.thread = Number(form.thread)
   console.log(form)
   invoke('request_test', {request:form}).then((e)=>{
-    countTime.value = e
+    console.log(e)
+    countTime.value = e.time
   })
 }
 </script>

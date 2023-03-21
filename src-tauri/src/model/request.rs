@@ -10,5 +10,7 @@ pub struct  Request {
     pub thread: i32,
     /** 次数 */
     pub total: i32,
+    /** 时间 */
+    pub time:u128,
 }
 

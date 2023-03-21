@@ -17,7 +17,7 @@ impl HttpUtil {
         Ok(())
     }
 
-   pub fn get_test(request: Request) -> Result<(u128), Box<dyn std::error::Error>> {
+   pub fn get_test(request: Request) -> Result<Request, Box<dyn std::error::Error>> {
         let thread_count = request.thread;
         let (tx, rx) = mpsc::channel();
         let f = move || {
@@ -44,7 +44,14 @@ impl HttpUtil {
             "执行总耗时: {:?}",
             end_time.duration_since(start_time).unwrap().as_millis()
         );
-        Ok(end_time.duration_since(start_time).unwrap().as_millis())
+        let result = Request{
+            request_addr: todo!(),
+            thread: todo!(),
+            method: todo!(),
+            total: todo!(),
+            time: end_time.duration_since(start_time).unwrap().as_millis(),
+        };
+        Ok(result)
     }
 }
 
@@ -60,7 +67,8 @@ mod test {
             request_addr: "http://localhost:8088/index".into(),
             method: "GET".into(),
             thread: 1,
-            total: 10000, //每个线程请求数量
+            total: 10000,
+            time: 1, //每个线程请求数量
         };
         HttpUtil::get_test(v);
     }
